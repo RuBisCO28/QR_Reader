@@ -173,6 +173,7 @@ def show_frame():
                         userid = cols[1]
                         username = rec[2]
                         lf = 1
+                        delf()
                         print("Hi! {0}!! Please show device_id which you want to borrow or return.".format(rec[2]))
                         login_user(username)
                         lock_unlock()
