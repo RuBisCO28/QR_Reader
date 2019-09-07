@@ -18,7 +18,7 @@ CANVAS_Y = 480
 
 root = tk.Tk()
 root.title("QR reader")
-root.geometry("900x480")
+root.geometry("640x480")
 
 canvas = tk.Canvas(root, width=CANVAS_X, height=CANVAS_Y)
 canvas.grid(row=0, column=0)
@@ -149,15 +149,13 @@ def show_frame():
     if ret == False:
         print('not recognized camera')
 
+    canvas.delete("oval")
     image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) 
     image_pil = Image.fromarray(image_rgb) 
     image_tk = ImageTk.PhotoImage(image_pil) 
     canvas.image_tk = image_tk
 
-    canvas.create_image(CANVAS_X / 2, CANVAS_Y / 2, image=image_tk)
-    now_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    label = tk.Label(root, text="Date: " + now_time + '\n' + 'Login user: ' + username, font=("Helvetica", 14, "bold"))
-    label.grid(row=0, column=1, padx=5, pady=5)
+    canvas.create_image(CANVAS_X / 2, CANVAS_Y / 2, image=image_tk, tag="oval")
 
     if not os.path.exists('lock'):
         data = decode(frame)
@@ -235,7 +233,7 @@ def show_frame():
                     stop = False
                     auto_log(10)
 
-    canvas.after(100, show_frame)
+    canvas.after(10, show_frame)
 
 show_frame()
 root.mainloop()
